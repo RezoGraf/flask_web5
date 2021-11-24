@@ -9,7 +9,8 @@
      let now = new Date();
      let clock = document.getElementById("clock");
      let options = {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
-     clock.innerHTML = now.toLocaleDateString('ru-RU', options)+"<br>"+now.toLocaleTimeString()
+     let options_time = {hour: 'numeric', minute: 'numeric', second: "numeric"}
+     clock.innerHTML = now.toLocaleDateString('ru-RU', options)+"<br>"+now.toLocaleTimeString('ru-RU', options_time)
  }, 1000);
 };
 </script>
@@ -70,9 +71,7 @@
 </head>
 {#  <div style="padding:5px"></div>#}
 {#    <div class="headotd">Терапевтическое отделение</div>#}
-<iframe src="http://192.168.100.19:3000/tv11" id="tv11" style="width: 100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)" >
-
-    </iframe><br>
+<iframe src="http://192.168.100.19:3000/tv11" id="tv11" style="width: 100%;" frameborder="0" scrolling="no" onload="resizeIframe(this)" ></iframe><br>
 <script>
   function resizeIframe(obj) {
     obj.style.height = obj.contentWindow.document.body.scrollHeight + 'px';
@@ -83,12 +82,12 @@
   () => {
     changeURL(document.getElementById('tv11'));
   },
-  10 * 1000
+  20 * 1000
 );
 
   </script>
 {#  <input type="button" value="Сменить" onclick="changeURL(document.getElementById('tv1'))">#}
-<h4><marquee>Точное расписание работы врачей уточняйте в регистратуре. В связи с эпедимиологическими ограничениями согласно приказу министерства здравоохранения Кемеровской области просьба соблюдать дистанцию и носить защитные маски.</marquee></h4>
+{#<div class="fixed-bottom"><h4><marquee><h4><marquee>Точное расписание работы врачей уточняйте в регистратуре.</marquee></h4></div>#}
 
 </html>
 

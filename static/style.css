@@ -1,9 +1,12 @@
 #clock{
     color: #09255c;
  font-weight: bold;
-  font-size: 30px;
+  font-size: 28px;
     vertical-align: middle;
         text-align:center;
+}
+.html{
+    height: 100%;
 }
 .noeven_day{
 }
