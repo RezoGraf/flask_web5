@@ -310,7 +310,7 @@ def tv22():
 
 @app.route('/nohead', methods=['GET'])
 def nohead():
-    return render_template('nohead.html')
+    return render_template('nohead.html', ip=ip)
 
 
 if __name__ == '__main__':
