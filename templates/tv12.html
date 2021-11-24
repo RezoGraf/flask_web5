@@ -13,13 +13,33 @@
 
 
     <body>
-    <div class="headotd">Терапевтическое отделение</div>
+    <div class="headotd">Детское отделение</div>
 
     <table class="resp-tab" style="height:95%;">
 
     <tbody>
 
   {% for NOTD, NPMM, NDLJ, RNAME, EVEN_DAY, NOEVEN_DAY, SATURDAY, SUNDAY in my_list %}
+    <tr>
+      <td style="font-weight: bold;width: 25%;">{{ NPMM }}</td>
+      <td style="width: 25%;">{{ NDLJ }}</td>
+      <td style="font-weight: bold;text-align: center;width: 6%;" >{{ RNAME }}</td>
+        <td  class="{{ style_noevenday_var }}" id="noeven_day" class="noeven_day" style="font-weight: bold;text-align: center;width: 11%;">{{ NOEVEN_DAY or '-' }}</td>
+      <td  class="{{ style_evenday_var }}" id="even_day" class="even_day" style="font-weight: bold;text-align: center;width: 11%;">{{ EVEN_DAY or '-' }}</td>
+      <td  class="{{ style_saturday_var }}" id="saturday" class="saturday" style="font-weight: bold;text-align: center;width: 11%;">{{ SATURDAY or '-' }}</td>
+      <td  class="{{ style_sunday_var }}" id="sunday" class="sunday" style="font-weight: bold;text-align: center;width: 11%;">{{ SUNDAY or '-' }}</td>
+    </tr>
+          {% endfor %}
+  </tbody>
+</table>
+
+        <div class="headotd">Ортодонтическое отделение</div>
+
+    <table class="resp-tab" style="height:95%;">
+
+    <tbody>
+
+  {% for NOTD, NPMM, NDLJ, RNAME, EVEN_DAY, NOEVEN_DAY, SATURDAY, SUNDAY in my_list2 %}
     <tr>
       <td style="font-weight: bold;width: 25%;">{{ NPMM }}</td>
       <td style="width: 25%;">{{ NDLJ }}</td>
