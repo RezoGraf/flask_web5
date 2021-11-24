@@ -1,10 +1,15 @@
 import fdb
 import datetime
+from ipaddress import ip_address
 from flask import Flask, abort, request, render_template, json, render_template_string, url_for
 from datetime import date, datetime
 import calendar
 
 app = Flask(__name__)
+
+ip = "192.168.100.19"
+# ip = "192.168.100.176"
+
 
 tv1str1n1 = """select np_otd.notd,n_mpp.nmpp,
   (select ndlj from n_dlj where n_doc.dolj=n_dlj.dlj),
@@ -254,7 +259,7 @@ def home():
     password = request.args.get('page')
     print(password)
 
-    return render_template('index.html')
+    return render_template('index.html', ip=ip)
 
 
 @app.route('/tv11', methods=['GET'])
@@ -309,4 +314,4 @@ def nohead():
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="3000")
+    app.run(host=ip, port="3000")
