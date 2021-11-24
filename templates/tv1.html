@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+  "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='jquery.js') }}"></script>
+     <script src="/static/jquery.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+    <body>
+    <div class="headotd">Терапевтическое отделение</div>
+
+    <table class="resp-tab">
+
+
+    <tbody>
+
+  {% for NOTD, NPMM, NDLJ, RNAME, EVEN_DAY, NOEVEN_DAY, SATURDAY, SUNDAY in my_list %}
+    <tr>
+      <td style="font-weight: bold;width: 25%;">{{ NPMM }}</td>
+      <td style="width: 25%;">{{ NDLJ }}</td>
+      <td style="font-weight: bold;text-align: center;">{{ RNAME }}</td>
+        <td id="noeven_day" class="noeven_day" style="font-weight: bold;text-align: center;">{{ NOEVEN_DAY or '-' }}</td>
+      <td id="even_day" class="even_day" style="font-weight: bold;text-align: center;">{{ EVEN_DAY or '-' }}</td>
+      <td id="saturday" class="saturday" style="font-weight: bold;text-align: center;">{{ SATURDAY or '-' }}</td>
+      <td id="sunday" class="sunday" style="font-weight: bold;text-align: center;">{{ SUNDAY or '-' }}</td>
+    </tr>
+
+          {% endfor %}
+{#<script>#}
+{#    let now2 = new Date().getDay();#}
+{#    let now3 = new Date();#}
+{#    let odd = ["1", "3", "5", "7", "9", "11", "13", "15", "17", "19", "21", "23", "25", "27", "29", "31"];#}
+{#    let even = ["2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22", "24", "26", "28", "30"];#}
+{#    if(now3.getDay() == 6) {#}
+{#        document.getElementById('saturday').className = "today";#}
+{#    } else if (now3.getDay() == 0) {#}
+{#        document.getElementById('sunday').className = "today";#}
+{#    } else if (now2 = odd) {#}
+{#        document.getElementById('noeven_day').className = "today";#}
+{#    } else if(now2 = even){#}
+{#        document.getElementById('even_day').className = "today";#}
+{#    }#}
+{#</script>#}
+  </tbody>
+
+
+</table>
+
+
+</body>
+
+</html>
+
+
+
+

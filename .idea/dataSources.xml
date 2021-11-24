@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="ARENA.GDB@192.168.100.9" uuid="80546493-67a8-4165-b22b-c57e4667d212">
+      <driver-ref>firebird</driver-ref>
+      <synchronize>true</synchronize>
+      <remarks>1</remarks>
+      <jdbc-driver>org.firebirdsql.jdbc.FBDriver</jdbc-driver>
+      <jdbc-url>jdbc:firebirdsql://192.168.100.9:3050/C:\DB\ARENA.GDB</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+  </component>
+</project>
