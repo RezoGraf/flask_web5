@@ -12,7 +12,7 @@ ip = "192.168.100.19"
 
 
 sql_rasp_template = """select np_otd.notd,n_mpp.nmpp,
-  (select nspz as ndlj from n_spz where n_doc.spz=n_spz.spz),
+  (select nspz as ndlj from n_spz where it_rasp.spz=n_spz.spz),
   (select nroom_kr as rname from room where room.id=it_rasp.room),
   CASE 
      when (EXTRACT(WEEK from dateoff)=EXTRACT(WEEK from Cast('NOW' as Date)))
