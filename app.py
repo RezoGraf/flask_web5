@@ -152,7 +152,6 @@ def home():
 @app.route('/tv11', methods=['GET'])
 def tv11():
     result1 = db_select(sql_rasp(165,1,12,1))
-    print(result1)
     style_evenday_var = style_evenday()
     style_noevenday_var = style_noevenday()
     style_saturday_var = style_saturday()
