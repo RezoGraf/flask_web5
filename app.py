@@ -35,7 +35,7 @@ and EXTRACT(WEEK from DATE_DUTY)=EXTRACT(WEEK from Cast('NOW' as Date))) as sund
     where (it_rasp.otd=np_otd.otd) and (it_rasp.doc=n_doc.doc)
     and (n_doc.mpp=n_mpp.mpp) and (n_doc.pv=1) and it_rasp.lpu={lpu} and n_doc.otd={otd}
     and (it_rasp.ntv={ntv}) and (it_rasp.nlist={nlist})
-    order by PS"""
+    order by PS, nmpp"""
 
 
 def sql_rasp(lpu,ntv,otd,nlist):
