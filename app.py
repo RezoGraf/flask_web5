@@ -35,12 +35,13 @@ and EXTRACT(WEEK from DATE_DUTY)=EXTRACT(WEEK from Cast('NOW' as Date))) as sund
     where (it_rasp.otd=np_otd.otd) and (it_rasp.doc=n_doc.doc)
     and (n_doc.mpp=n_mpp.mpp) and (n_doc.pv=1) and it_rasp.lpu={lpu} and n_doc.otd={otd}
     and (it_rasp.ntv={ntv}) and (it_rasp.nlist={nlist})
-    order by PS, nmpp"""
+    order by T_RASP.PS, nmpp"""
 
 
-def sql_rasp(lpu,ntv,otd,nlist):
-   sql_rasp_done = sql_rasp_template.format(lpu=lpu, ntv=ntv, otd=otd, nlist=nlist)
-   return sql_rasp_done
+def sql_rasp(lpu, ntv, otd, nlist):
+    sql_rasp_done = sql_rasp_template.format(
+        lpu=lpu, ntv=ntv, otd=otd, nlist=nlist)
+    return sql_rasp_done
 
 
 def even_or_odd():
@@ -87,7 +88,8 @@ def style_sunday():
 
 
 def db_select(sql):
-    con = fdb.connect(dsn='192.168.100.9:C:/DB/ARENA.GDB', user='sysdba', password='masterkey', charset="utf-8")
+    con = fdb.connect(dsn='192.168.100.9:C:/DB/ARENA.GDB',
+                      user='sysdba', password='masterkey', charset="utf-8")
     cur = con.cursor()
     cur.execute(sql)
     result_select = cur.fetchall()
@@ -112,33 +114,36 @@ print("Конфигурация для ЛПУ: ", lpu)
 sql_max_tv = "select max(NTV) from IT_RASP_CONFIGOTD where lpu=%s" % lpu
 max_tv = db_select(sql_max_tv)
 ntv_max = list_to_int(max_tv)
-for i in range(1,ntv_max+1):
-   sql_maximum_str_template = """select max(nlist) from IT_RASP_CONFIGOTD where lpu={lpu} and ntv={ntv}"""
-   sql_maximum_str = sql_maximum_str_template.format(lpu=lpu, ntv=i)
-   max_str = db_select(sql_maximum_str)
-   max_str = list_to_int(max_str)
-   # print("Телевизор: ", i, "Максимум страниц: ", max_str)
-   for p in range(1, max_str+1):
-      sql_maximum_otd_template = """select count(otd) from IT_RASP_CONFIGOTD where lpu={lpu} and ntv={ntv} and nlist={nlist}"""
-      sql_maximum_otd = sql_maximum_otd_template.format(lpu=lpu, ntv=i, nlist=p)
-      max_otd = db_select(sql_maximum_otd)
-      max_otd = list_to_int(max_otd)
+for i in range(1, ntv_max+1):
+    sql_maximum_str_template = """select max(nlist) from IT_RASP_CONFIGOTD where lpu={lpu} and ntv={ntv}"""
+    sql_maximum_str = sql_maximum_str_template.format(lpu=lpu, ntv=i)
+    max_str = db_select(sql_maximum_str)
+    max_str = list_to_int(max_str)
+    # print("Телевизор: ", i, "Максимум страниц: ", max_str)
+    for p in range(1, max_str+1):
+        sql_maximum_otd_template = """select count(otd) from IT_RASP_CONFIGOTD where lpu={lpu} and ntv={ntv} and nlist={nlist}"""
+        sql_maximum_otd = sql_maximum_otd_template.format(
+            lpu=lpu, ntv=i, nlist=p)
+        max_otd = db_select(sql_maximum_otd)
+        max_otd = list_to_int(max_otd)
 
-      print("Телевизор: ", i, "Страница: ", p, "Отделений: ", max_otd)
+        print("Телевизор: ", i, "Страница: ", p, "Отделений: ", max_otd)
 
 
 def tv_config(lpu_number, tv_number):
-   sql_maximum_str_template = """select max(nlist) from IT_RASP_CONFIGOTD where lpu={lpu} and ntv={ntv}"""
-   sql_maximum_str = sql_maximum_str_template.format(lpu=lpu_number, ntv=tv_number)
-   max_str = db_select(sql_maximum_str)
-   max_str = list_to_int(max_str)
-   for p in range(1, max_str+1):
-      sql_maximum_otd_template = """select count(otd) from IT_RASP_CONFIGOTD where lpu={lpu} and ntv={ntv} and nlist={nlist}"""
-      sql_maximum_otd = sql_maximum_otd_template.format(lpu=lpu_number, ntv=tv_number, nlist=p)
-      max_otd = db_select(sql_maximum_otd)
-      max_otd = list_to_int(max_otd)
-      return 
-   
+    sql_maximum_str_template = """select max(nlist) from IT_RASP_CONFIGOTD where lpu={lpu} and ntv={ntv}"""
+    sql_maximum_str = sql_maximum_str_template.format(
+        lpu=lpu_number, ntv=tv_number)
+    max_str = db_select(sql_maximum_str)
+    max_str = list_to_int(max_str)
+    for p in range(1, max_str+1):
+        sql_maximum_otd_template = """select count(otd) from IT_RASP_CONFIGOTD where lpu={lpu} and ntv={ntv} and nlist={nlist}"""
+        sql_maximum_otd = sql_maximum_otd_template.format(
+            lpu=lpu_number, ntv=tv_number, nlist=p)
+        max_otd = db_select(sql_maximum_otd)
+        max_otd = list_to_int(max_otd)
+        return
+
 
 @app.route('/', methods=['GET'])
 def home():
@@ -151,7 +156,7 @@ def home():
 
 @app.route('/tv11', methods=['GET'])
 def tv11():
-    result1 = db_select(sql_rasp(165,1,12,1))
+    result1 = db_select(sql_rasp(165, 1, 12, 1))
     style_evenday_var = style_evenday()
     style_noevenday_var = style_noevenday()
     style_saturday_var = style_saturday()
@@ -162,14 +167,14 @@ def tv11():
 
 @app.route('/tv12', methods=['GET'])
 def tv12():
-   result1 = db_select(sql_rasp(165,1,16,2))
-   result2 = db_select(sql_rasp(165,1,14,2))
-   style_evenday_var = style_evenday()
-   style_noevenday_var = style_noevenday()
-   style_saturday_var = style_saturday()
-   style_sunday_var = style_sunday()
+    result1 = db_select(sql_rasp(165, 1, 16, 2))
+    result2 = db_select(sql_rasp(165, 1, 14, 2))
+    style_evenday_var = style_evenday()
+    style_noevenday_var = style_noevenday()
+    style_saturday_var = style_saturday()
+    style_sunday_var = style_sunday()
 
-   return render_template('tv12.html', my_list=result1, my_list2=result2, style_evenday_var=style_evenday_var, style_noevenday_var=style_noevenday_var, style_saturday_var=style_saturday_var, style_sunday_var=style_sunday_var)
+    return render_template('tv12.html', my_list=result1, my_list2=result2, style_evenday_var=style_evenday_var, style_noevenday_var=style_noevenday_var, style_saturday_var=style_saturday_var, style_sunday_var=style_sunday_var)
 
 
 # @app.route('/tv21', methods=['GET'])
@@ -185,8 +190,8 @@ def tv12():
 
 @app.route('/tv22', methods=['GET'])
 def tv22():
-    result1 = db_select(sql_rasp(165,2,15,1))
-    result2 = db_select(sql_rasp(165,2,13,1))
+    result1 = db_select(sql_rasp(165, 2, 15, 1))
+    result2 = db_select(sql_rasp(165, 2, 13, 1))
     style_evenday_var = style_evenday()
     style_noevenday_var = style_noevenday()
     style_saturday_var = style_saturday()
