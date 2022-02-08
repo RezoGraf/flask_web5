@@ -11,26 +11,25 @@ ip = "192.168.100.19"
 # ip = "192.168.100.192"
 
 
-sql_rasp_template = """select np_otd.notd,n_mpp.nmpp,
+sql_rasp_template = """select distinct np_otd.notd,n_mpp.nmpp,
   (select nspz as ndlj from n_spz where it_rasp.spz=n_spz.spz),
   (select nroom_kr as rname from room where room.id=it_rasp.room),
   CASE 
      when (EXTRACT(WEEK from dateoff)=EXTRACT(WEEK from Cast('NOW' as Date)))
      and (it_rasp.dateoff>=Cast('NOW' as Date)) then NULL 
   ELSE 
-     it_rasp.even_day
+     (select interval_time from it_rasp_time where it_rasp.id_interval2=it_rasp_time.id) 
   END as even_day,
-
   CASE 
      when (EXTRACT(WEEK from dateoff)=EXTRACT(WEEK from Cast('NOW' as Date)))
      and (it_rasp.dateoff>=Cast('NOW' as Date)) then NULL  
   ELSE 
-     it_rasp.noeven_day
+     (select interval_time from it_rasp_time where it_rasp.id_interval1=it_rasp_time.id)
   END as noeven_day,
-(select TIME_DUTY from it_rasp_duty where (it_rasp_duty.doc=it_rasp.doc) and (it_rasp_duty.NDAY=6)
-and EXTRACT(WEEK from DATE_DUTY)=EXTRACT(WEEK from Cast('NOW' as Date))) as saturday,
-(select TIME_DUTY from it_rasp_duty where (it_rasp_duty.doc=it_rasp.doc) and (it_rasp_duty.NDAY=7)
-and EXTRACT(WEEK from DATE_DUTY)=EXTRACT(WEEK from Cast('NOW' as Date))) as sunday
+  (select TIME_DUTY from it_rasp_duty where (it_rasp_duty.doc=it_rasp.doc) and (it_rasp_duty.NDAY=6)
+   and EXTRACT(WEEK from DATE_DUTY)=EXTRACT(WEEK from Cast('NOW' as Date))) as saturday,
+   (select TIME_DUTY from it_rasp_duty where (it_rasp_duty.doc=it_rasp.doc) and (it_rasp_duty.NDAY=7)
+    and EXTRACT(WEEK from DATE_DUTY)=EXTRACT(WEEK from Cast('NOW' as Date))) as sunday
     from it_rasp,np_otd,n_doc,n_mpp
     where (it_rasp.otd=np_otd.otd) and (it_rasp.doc=n_doc.doc)
     and (n_doc.mpp=n_mpp.mpp) and (n_doc.pv=1) and it_rasp.lpu={lpu} and n_doc.otd={otd}
