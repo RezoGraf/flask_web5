@@ -25,9 +25,9 @@ sql_rasp_template = """select distinct np_otd.notd,n_mpp.nmpp,
   ELSE 
      (select interval_time from it_rasp_time where it_rasp.id_interval1=it_rasp_time.id)
   END as noeven_day,
-  (select TIME_DUTY from it_rasp_duty where (it_rasp_duty.doc=it_rasp.doc) and (it_rasp_duty.NDAY=6)
+  (select distinct TIME_DUTY from it_rasp_duty where (it_rasp_duty.doc=it_rasp.doc) and (it_rasp_duty.NDAY=6)
    and EXTRACT(WEEK from DATE_DUTY)=EXTRACT(WEEK from Cast('NOW' as Date))) as saturday,
-   (select TIME_DUTY from it_rasp_duty where (it_rasp_duty.doc=it_rasp.doc) and (it_rasp_duty.NDAY=7)
+   (select distinct TIME_DUTY from it_rasp_duty where (it_rasp_duty.doc=it_rasp.doc) and (it_rasp_duty.NDAY=7)
     and EXTRACT(WEEK from DATE_DUTY)=EXTRACT(WEEK from Cast('NOW' as Date))) as sunday
     from it_rasp,np_otd,n_doc,n_mpp
     where (it_rasp.otd=np_otd.otd) and (it_rasp.doc=n_doc.doc)
